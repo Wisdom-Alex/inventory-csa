@@ -2,9 +2,10 @@
 
 
 def highest_stock_item(items):
-    return max(items, key=lambda i: i["quantity"])
+    """Return the item with the largest quantity, or None if empty."""
+    return max(items, key=lambda i: i["quantity"], default=None)
 
 
 def lowest_stock_item(items):
-    # BUG (seeded for corrective maintenance): uses max instead of min
-    return max(items, key=lambda i: i["quantity"])
+    """Return the item with the smallest quantity, or None if empty."""
+    return min(items, key=lambda i: i["quantity"], default=None)

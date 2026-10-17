@@ -5,10 +5,10 @@ from utils.helpers import highest_stock_item, lowest_stock_item
 
 
 def total_stock_value(items):
+    """Return the sum of quantity * price for every item."""
     total = 0
     for item in items:
-        # BUG (seeded for corrective maintenance): ignores quantity
-        total += item["price"]
+        total += item["quantity"] * item["price"]
     return total
 
 
