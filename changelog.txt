@@ -1,0 +1,7 @@
+b904ad1 | Wisdom Alex | 2026-10-17 | Merge dev into main (maintenance complete)
+197b0a5 | Wisdom Alex | 2026-10-17 | feat: initial inventory tracker (inventory, app, helpers)
+4381a84 | Wisdom Alex | 2026-10-17 | refactor(preventive): move totals to helpers, add docstrings and unit tests
+d030ef4 | Wisdom Alex | 2026-10-17 | Merge feature/low-stock-report into dev
+e8d4ea0 | Wisdom Alex | 2026-10-17 | feat(adaptive): Python 3.12 dataclass Item with validation and typing
+8c7b5fe | Wisdom Alex | 2026-10-17 | feat(perfective): formatted report and low stock alert
+5c404ab | Wisdom Alex | 2026-10-17 | fix(corrective): use quantity*price in total and min() for lowest stock
