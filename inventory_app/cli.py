@@ -1,17 +1,8 @@
-"""Command line entry point: prints the stock report."""
+"""Command line entry point: prints the stock report from SQLite."""
 
-import json
-from pathlib import Path
-
+from inventory_app import repository
 from inventory_app.controllers import build_summary
 from inventory_app.models import Item
-
-LEGACY_JSON = Path(__file__).resolve().parent.parent / "data" / "legacy_inventory.json"
-
-
-def load_items() -> list[Item]:
-    """Load items from the legacy JSON file."""
-    return [Item(**row) for row in json.loads(LEGACY_JSON.read_text())]
 
 
 def format_report(items: list[Item]) -> str:
@@ -30,8 +21,12 @@ def format_report(items: list[Item]) -> str:
 
 
 def main() -> None:
-    """Print the stock report."""
-    print(format_report(load_items()))
+    """Print the stock report from the database."""
+    conn = repository.connect()
+    try:
+        print(format_report(repository.list_items(conn)))
+    finally:
+        conn.close()
 
 
 if __name__ == "__main__":
