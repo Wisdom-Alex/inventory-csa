@@ -1,1 +1,1 @@
-# Standard library only; Python 3.9 or newer required.
+pydantic>=2.7
