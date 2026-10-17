@@ -1,20 +1,42 @@
-# Inventory Tracker (Configuration Status Accounting lab)
+# Inventory Tracker v2.0 (re-engineered)
 
-Reads `inventory.py` and calculates the total stock value. Requires **Python 3.9 or newer** (tested on 3.9 and 3.12).
+Modular Python package with SQLite storage, a FastAPI REST interface and Docker Compose deployment.
 
-| File | Purpose |
-|------|---------|
-| `inventory.py` | Validated `Item` dataclass and the stock list |
-| `app.py` | Formatted stock report and entry point |
-| `utils/helpers.py` | Highest/lowest stock, low stock alerts, total value |
-| `tests/test_inventory.py` | Unit tests (`python -m unittest -v`) |
-| `changelog.txt` | Exported Git change log (commits, authors, dates) |
-| `requirements.txt` | Python dependencies (standard library only) |
+## Structure
 
-Run with `python app.py`.
+| Path | Layer | Purpose |
+|------|-------|---------|
+| `inventory_app/models.py` | Domain | Pydantic `ItemCreate` and `Item` models |
+| `inventory_app/controllers.py` | Business logic | Totals, extremes, low stock, summary |
+| `inventory_app/repository.py` | Data access | All SQLite queries |
+| `inventory_app/migrate.py` | Migration | JSON to SQLite (idempotent) |
+| `inventory_app/api.py` | Interface | FastAPI endpoints |
+| `inventory_app/cli.py` | Interface | Console report |
+| `reporter/` | Second service | Calls the API and prints a report |
+| `data/legacy_inventory.json` | Legacy data | Source for the migration |
 
-## Commit message convention
+## Run locally
 
-`type(maintenance-kind): summary`, for example `fix(corrective): ...`.
-This makes it possible to trace every commit to a maintenance task during
-Configuration Status Accounting.
+```bash
+pip install -r requirements-dev.txt
+python -m inventory_app.migrate
+python -m inventory_app.cli
+uvicorn inventory_app.api:app --reload      # http://localhost:8000/docs
+python -m unittest discover -v
+```
+
+## Run with Docker Compose
+
+```bash
+docker compose up --build
+curl http://localhost:8000/summary
+docker compose down
+```
+
+## Release history
+
+| Tag | Description |
+|-----|-------------|
+| v0.1 | Initial baseline (seeded defects) |
+| v1.0 | Corrective, adaptive, perfective, preventive maintenance |
+| v2.0 | Re-engineering: modular package, SQLite, FastAPI, Docker Compose |

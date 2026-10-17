@@ -1,0 +1,27 @@
+services:
+  api:
+    build: .
+    container_name: inventory-api
+    ports:
+      - "8000:8000"
+    environment:
+      INVENTORY_DB: /data/inventory.db
+    volumes:
+      - inventory_data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  reporter:
+    build: ./reporter
+    container_name: inventory-reporter
+    environment:
+      API_URL: http://api:8000
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  inventory_data:
