@@ -1,0 +1,8 @@
+"""Inventory data: each item has item_name, quantity and price (NGN)."""
+
+inventory = [
+    {"item_name": "Laptop", "quantity": 5, "price": 450000},
+    {"item_name": "Mouse", "quantity": 40, "price": 6500},
+    {"item_name": "Keyboard", "quantity": 25, "price": 12000},
+    {"item_name": "Monitor", "quantity": 8, "price": 95000},
+]
